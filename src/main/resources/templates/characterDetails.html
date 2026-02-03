@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Personaje</title>
+</head>
+<body>
+<h1>Detalles del Personaje</h1>
+
+<p><strong>ID:</strong> <span th:text="${character.characterId}"></span></p>
+<p><strong>Nickname:</strong> <span th:text="${character.nickname}"></span></p>
+<p><strong>Nombre:</strong> <span th:text="${character.name}"></span></p>
+<p><strong>Sexo:</strong> <span th:text="${character.sex}"></span></p>
+<p><strong>Elemento:</strong> <span th:text="${character.element}"></span></p>
+<p><strong>Posición:</strong> <span th:text="${character.position}"></span></p>
+
+<h3>Estadísticas:</h3>
+<ul>
+    <li>Kick: <span th:text="${character.kick}"></span></li>
+    <li>Dribble: <span th:text="${character.dribble}"></span></li>
+    <li>Block: <span th:text="${character.block}"></span></li>
+    <li>Catch: <span th:text="${character.catch}"></span></li>
+    <li>Technique: <span th:text="${character.technique}"></span></li>
+    <li>Speed: <span th:text="${character.speed}"></span></li>
+    <li>Stamina: <span th:text="${character.stamina}"></span></li>
+    <li>Luck: <span th:text="${character.luck}"></span></li>
+</ul>
+
+<a href="/characters">Volver a la lista</a>
+</body>
+</html>

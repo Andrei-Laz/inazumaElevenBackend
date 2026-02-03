@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Personajes</title>
+</head>
+<body>
+<h1>Personajes</h1>
+
+<a href="/characters/new">Agregar Nuevo Personaje</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nickname</th>
+        <th>Nombre</th>
+        <th>Elemento</th>
+        <th>Posición</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="char : ${characters}">
+        <td th:text="${char.characterId}"></td>
+        <td th:text="${char.nickname}"></td>
+        <td th:text="${char.name}"></td>
+        <td th:text="${char.element}"></td>
+        <td th:text="${char.position}"></td>
+        <td>
+            <a th:href="@{/characters/{id}(id=${char.characterId})}">Ver</a> |
+            <a th:href="@{/characters/{id}/edit(id=${char.characterId})}">Editar</a> |
+            <a th:href="@{/characters/{id}/delete(id=${char.characterId})}" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

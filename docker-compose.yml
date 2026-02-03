@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-inazuma-server
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: inazuma
+      MYSQL_DATABASE: InazumaExpressSpringBoot
+      MYSQL_USER: Andrei
+      MYSQL_PASSWORD: inazuma
+
+
+#export database
+#docker exec -i mysql-warframe-server mysqldump --no-tablespaces -u root -p SpringBootWarframe > SpringBootWarframe.sql
+
+#esto da error la mayoria de los casos por culpa de permisos
+#por lo cual es mejor crear el archivo directamente dentro de docker y después copiarlo hacia fuera
+#  docker exec -it mysql-warframe-server bash
+#  mysqldump --no-tablespaces -u Andrei -p SpringBootInazuma > /tmp/SpringBootInazuma.sql
+#  exit
+#  docker cp mysql-inazuma-server:/tmp/SpringBootInazuma.sql SpringBootInazuma.sql
+
+
+#import database
+#docker exec -i mysql-warframe-server mysql -u root -p SpringBootWarframe < SpringBootWarframe.sql
+
+#Lo mismo ocurre con import
+#   docker cp SpringBootWarframe.sql mysql-warframe-server:/tmp/SpringBootWarframe.sql
+#   docker exec -it mysql-warframe-server bash
+#   mysql -u Andrei -p SpringBootWarframe < /tmp/SpringBootWarframe.sql

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${character.characterId == null}">Agregar Personaje</title>
+    <title th:unless="${character.characterId == null}">Editar Personaje</title>
+</head>
+<body>
+<h1 th:if="${character.characterId == null}">Agregar Personaje</h1>
+<h1 th:unless="${character.characterId == null}">Editar Personaje</h1>
+
+<form action="#" th:action="@{/characters}" th:object="${character}" method="post">
+    <input type="hidden" th:field="*{characterId}" />
+
+    <label for="nickname">Nickname:</label>
+    <input type="text" id="nickname" th:field="*{nickname}" required />
+    <br/>
+
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" th:field="*{name}" />
+    <br/>
+
+    <label for="sex">Sexo:</label>
+    <select id="sex" th:field="*{sex}">
+        <option value="MALE">Masculino</option>
+        <option value="FEMALE">Femenino</option>
+    </select>
+    <br/>
+
+    <label for="element">Elemento:</label>
+    <select id="element" th:field="*{element}">
+        <option value="FIRE">Fuego</option>
+        <option value="AQUA">Agua</option>
+        <option value="WOOD">Madera</option>
+        <option value="EARTH">Tierra</option>
+        <option value="METAL">Metal</option>
+        <option value="LIGHTNING">Rayo</option>
+        <option value="WIND">Viento</option>
+    </select>
+    <br/>
+
+    <label for="position">Posición:</label>
+    <select id="position" th:field="*{position}">
+        <option value="GK">Portero</option>
+        <option value="DF">Defensa</option>
+        <option value="MF">Centrocampista</option>
+        <option value="FW">Delantero</option>
+    </select>
+    <br/>
+
+    <!-- Stats -->
+    <label for="kick">Kick:</label>
+    <input type="number" id="kick" th:field="*{kick}" min="0" max="99" />
+    <br/>
+    <label for="dribble">Dribble:</label>
+    <input type="number" id="dribble" th:field="*{dribble}" min="0" max="99" />
+    <br/>
+    <label for="block">Block:</label>
+    <input type="number" id="block" th:field="*{block}" min="0" max="99" />
+    <br/>
+    <label for="catch">Catch:</label>
+    <input type="number" id="catch" th:field="*{catch}" min="0" max="99" />
+    <br/>
+    <label for="technique">Technique:</label>
+    <input type="number" id="technique" th:field="*{technique}" min="0" max="99" />
+    <br/>
+    <label for="speed">Speed:</label>
+    <input type="number" id="speed" th:field="*{speed}" min="0" max="99" />
+    <br/>
+    <label for="stamina">Stamina:</label>
+    <input type="number" id="stamina" th:field="*{stamina}" min="0" max="99" />
+    <br/>
+    <label for="luck">Luck:</label>
+    <input type="number" id="luck" th:field="*{luck}" min="0" max="99" />
+    <br/>
+
+    <button type="submit" th:if="${character.characterId == null}">Guardar</button>
+    <button type="submit" th:unless="${character.characterId == null}">Actualizar</button>
+</form>
+</body>
+</html>
