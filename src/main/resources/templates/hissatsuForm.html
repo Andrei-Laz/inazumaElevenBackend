@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:if="${hissatsu.hissatsuId == null}">Agregar Hissatsu</title>
+    <title th:unless="${hissatsu.hissatsuId == null}">Editar Hissatsu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 th:if="${hissatsu.hissatsuId == null}">Agregar Nuevo Hissatsu</h2>
+        <h2 th:unless="${hissatsu.hissatsuId == null}">Editar Hissatsu</h2>
+        <a href="/hissatsus" class="btn btn-outline-secondary">Volver a la lista</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="#" th:action="@{/hissatsus}" th:object="${hissatsu}" method="post">
+                <input type="hidden" th:field="*{hissatsuId}" />
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre *</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="element" class="form-label">Elemento *</label>
+                    <select class="form-select" id="element" th:field="*{element}" required>
+                        <option value="">Selecciona un elemento</option>
+                        <option value="FIRE">Fuego</option>
+                        <option value="AQUA">Agua</option>
+                        <option value="WOOD">Madera</option>
+                        <option value="EARTH">Tierra</option>
+                        <option value="METAL">Metal</option>
+                        <option value="LIGHTNING">Rayo</option>
+                        <option value="WIND">Viento</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                </div>
+
+                <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary" th:if="${hissatsu.hissatsuId == null}">Guardar Hissatsu</button>
+                    <button type="submit" class="btn btn-primary" th:unless="${hissatsu.hissatsuId == null}">Actualizar Hissatsu</button>
+                    <a href="/hissatsus" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

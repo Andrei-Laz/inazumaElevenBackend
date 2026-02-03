@@ -18,16 +18,16 @@ services:
 
 #esto da error la mayoria de los casos por culpa de permisos
 #por lo cual es mejor crear el archivo directamente dentro de docker y después copiarlo hacia fuera
-#  docker exec -it mysql-warframe-server bash
+#  docker exec -it mysql-inazuma-server bash
 #  mysqldump --no-tablespaces -u Andrei -p SpringBootInazuma > /tmp/SpringBootInazuma.sql
 #  exit
 #  docker cp mysql-inazuma-server:/tmp/SpringBootInazuma.sql SpringBootInazuma.sql
 
 
 #import database
-#docker exec -i mysql-warframe-server mysql -u root -p SpringBootWarframe < SpringBootWarframe.sql
+#docker exec -i mysql-warframe-server mysql -u root -p InazumaExpressSpringBoot < InazumaExpressSpringBoot.sql
 
 #Lo mismo ocurre con import
-#   docker cp SpringBootWarframe.sql mysql-warframe-server:/tmp/SpringBootWarframe.sql
+#   docker cp InazumaExpressSpringBoot.sql mysql-warframe-server:/tmp/InazumaExpressSpringBoot.sql
 #   docker exec -it mysql-warframe-server bash
-#   mysql -u Andrei -p SpringBootWarframe < /tmp/SpringBootWarframe.sql
+#   mysql -u Andrei -p InazumaExpressSpringBoot < /tmp/InazumaExpressSpringBoot.sql
