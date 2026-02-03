@@ -22,7 +22,7 @@ class CharacterController {
 
     @GetMapping("/new")
     fun showCreateForm(model: Model): String {
-        model.addAttribute("character", model)
+        model.addAttribute("character", Character())
         return "characterForm"
     }
 

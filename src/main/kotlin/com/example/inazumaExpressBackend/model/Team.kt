@@ -2,6 +2,8 @@ package com.example.inazumaExpressBackend.model
 
 import jakarta.persistence.*
 
+private const val teamSize = 16
+
 @Entity
 @Table(name = "teams")
 data class Team(
@@ -19,6 +21,4 @@ data class Team(
         inverseJoinColumns = [JoinColumn(name = "character_id")]
     )
     var characters: MutableSet<Character> = mutableSetOf(),
-
-    
 )

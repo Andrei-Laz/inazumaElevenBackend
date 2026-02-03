@@ -20,15 +20,15 @@ data class Character(
 
     @Enumerated(EnumType.STRING)
     @Column
-    var sex: Sex,
+    var sex: Sex = Sex.UNKNOWN,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    var element: Element,
+    var element: Element = Element.VOID,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    var position: Position,
+    var position: Position = Position.ND,
 
     //Stats
     @Column

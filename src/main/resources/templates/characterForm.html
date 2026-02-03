@@ -2,80 +2,112 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:if="${character.characterId == null}">Agregar Personaje</title>
-    <title th:unless="${character.characterId == null}">Editar Personaje</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:if="${character.characterId == null}">Add a character to the database</title>
+    <title th:unless="${character.characterId == null}">Edit character</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1 th:if="${character.characterId == null}">Agregar Personaje</h1>
-<h1 th:unless="${character.characterId == null}">Editar Personaje</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 th:if="${character.characterId == null}">Add new character</h2>
+        <h2 th:unless="${character.characterId == null}">Edit character</h2>
+        <a href="/characters" class="btn btn-outline-secondary">Go back to the list</a>
+    </div>
 
-<form action="#" th:action="@{/characters}" th:object="${character}" method="post">
-    <input type="hidden" th:field="*{characterId}" />
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="#" th:action="@{/characters}" th:object="${character}" method="post">
+                <input type="hidden" th:field="*{characterId}" />
 
-    <label for="nickname">Nickname:</label>
-    <input type="text" id="nickname" th:field="*{nickname}" required />
-    <br/>
+                <div class="mb-3">
+                    <label for="nickname" class="form-label">Nickname *</label>
+                    <input type="text" class="form-control" id="nickname" th:field="*{nickname}" required />
+                </div>
 
-    <label for="name">Nombre:</label>
-    <input type="text" id="name" th:field="*{name}" />
-    <br/>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" />
+                </div>
 
-    <label for="sex">Sexo:</label>
-    <select id="sex" th:field="*{sex}">
-        <option value="MALE">Masculino</option>
-        <option value="FEMALE">Femenino</option>
-    </select>
-    <br/>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="sex" class="form-label">Gender</label>
+                        <select class="form-select" id="sex" th:field="*{sex}">
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="UNKNOWN">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="element" class="form-label">Element *</label>
+                        <select class="form-select" id="element" th:field="*{element}" required>
+                            <option value="">Select an element</option>
+                            <option value="FIRE">Fire</option>
+                            <option value="EARTH">Earth</option>
+                            <option value="WOOD">Wood</option>
+                            <option value="WIND">Wind</option>
+                            <option value="Void">Void</option>
+                        </select>
+                    </div>
+                </div>
 
-    <label for="element">Elemento:</label>
-    <select id="element" th:field="*{element}">
-        <option value="FIRE">Fuego</option>
-        <option value="AQUA">Agua</option>
-        <option value="WOOD">Madera</option>
-        <option value="EARTH">Tierra</option>
-        <option value="METAL">Metal</option>
-        <option value="LIGHTNING">Rayo</option>
-        <option value="WIND">Viento</option>
-    </select>
-    <br/>
+                <div class="mb-3">
+                    <label for="position" class="form-label">Position *</label>
+                    <select class="form-select" id="position" th:field="*{position}" required>
+                        <option value="">Select a position</option>
+                        <option value="GK">Goalkeeper</option>
+                        <option value="DF">Defender</option>
+                        <option value="MF">Midfielder</option>
+                        <option value="FW">Forward</option>
+                    </select>
+                </div>
 
-    <label for="position">Posición:</label>
-    <select id="position" th:field="*{position}">
-        <option value="GK">Portero</option>
-        <option value="DF">Defensa</option>
-        <option value="MF">Centrocampista</option>
-        <option value="FW">Delantero</option>
-    </select>
-    <br/>
+                <hr>
+                <h5>Stats</h5>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="kick" class="form-label">Kick</label>
+                        <input type="number" class="form-control" id="kick" th:field="*{kick}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="dribble" class="form-label">Dribble</label>
+                        <input type="number" class="form-control" id="dribble" th:field="*{dribble}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="block" class="form-label">Block</label>
+                        <input type="number" class="form-control" id="block" th:field="*{block}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="catch" class="form-label">Catch</label>
+                        <input type="number" class="form-control" id="catch" th:field="*{catch}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="technique" class="form-label">Technique</label>
+                        <input type="number" class="form-control" id="technique" th:field="*{technique}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="speed" class="form-label">Speed</label>
+                        <input type="number" class="form-control" id="speed" th:field="*{speed}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="stamina" class="form-label">Stamina</label>
+                        <input type="number" class="form-control" id="stamina" th:field="*{stamina}" min="0" max="200" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="luck" class="form-label">Luck</label>
+                        <input type="number" class="form-control" id="luck" th:field="*{luck}" min="0" max="200" />
+                    </div>
+                </div>
 
-    <!-- Stats -->
-    <label for="kick">Kick:</label>
-    <input type="number" id="kick" th:field="*{kick}" min="0" max="99" />
-    <br/>
-    <label for="dribble">Dribble:</label>
-    <input type="number" id="dribble" th:field="*{dribble}" min="0" max="99" />
-    <br/>
-    <label for="block">Block:</label>
-    <input type="number" id="block" th:field="*{block}" min="0" max="99" />
-    <br/>
-    <label for="catch">Catch:</label>
-    <input type="number" id="catch" th:field="*{catch}" min="0" max="99" />
-    <br/>
-    <label for="technique">Technique:</label>
-    <input type="number" id="technique" th:field="*{technique}" min="0" max="99" />
-    <br/>
-    <label for="speed">Speed:</label>
-    <input type="number" id="speed" th:field="*{speed}" min="0" max="99" />
-    <br/>
-    <label for="stamina">Stamina:</label>
-    <input type="number" id="stamina" th:field="*{stamina}" min="0" max="99" />
-    <br/>
-    <label for="luck">Luck:</label>
-    <input type="number" id="luck" th:field="*{luck}" min="0" max="99" />
-    <br/>
-
-    <button type="submit" th:if="${character.characterId == null}">Guardar</button>
-    <button type="submit" th:unless="${character.characterId == null}">Actualizar</button>
-</form>
+                <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary" th:if="${character.characterId == null}">Save character</button>
+                    <button type="submit" class="btn btn-primary" th:unless="${character.characterId == null}">Update character</button>
+                    <a href="/characters" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
