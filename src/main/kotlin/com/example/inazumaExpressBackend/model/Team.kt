@@ -2,23 +2,25 @@ package com.example.inazumaExpressBackend.model
 
 import jakarta.persistence.*
 
-private const val teamSize = 16
-
 @Entity
 @Table(name = "teams")
 data class Team(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "team_id")
     var teamId: Int? = null,
 
     @Column(nullable = false)
-    var name: String,
+    var teamName: String = "",
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "team_character",
-        joinColumns = [JoinColumn(name = "team_id")],
-        inverseJoinColumns = [JoinColumn(name = "character_id")]
-    )
-    var characters: MutableSet<Character> = mutableSetOf(),
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: User,
+
+    @Column
+    var formation: String = "4-4-2", // Default formation
+
+    // Relationships
+    @OneToMany(mappedBy = "team", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val members: MutableSet<TeamMember> = mutableSetOf()
 )

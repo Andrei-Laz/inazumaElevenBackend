@@ -7,12 +7,22 @@ import jakarta.persistence.*
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "user_id")
     var userId: Int? = null,
 
-    @Column(nullable = false)
-    var userName: String,
+    @Column(nullable = false, unique = true)
+    var userName: String = "",
 
     @Column(nullable = false)
-    var password: String,
+    var password: String = "",
+
+    @Column(unique = true)
+    var email: String? = null,
+
+    // Relationships
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val teams: MutableSet<Team> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val hissatsuAssignments: MutableSet<CharacterHissatsus> = mutableSetOf()
 )

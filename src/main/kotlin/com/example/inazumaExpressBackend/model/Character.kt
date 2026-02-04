@@ -10,6 +10,7 @@ import jakarta.persistence.*
 data class Character(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "character_id")
     var characterId: Int? = null,
 
     @Column(nullable = false)
@@ -30,7 +31,7 @@ data class Character(
     @Column(nullable = false)
     var position: Position = Position.ND,
 
-    //Stats
+    // Stats
     @Column
     var kick: Int = 0,
     @Column
@@ -46,5 +47,11 @@ data class Character(
     @Column
     var stamina: Int = 0,
     @Column
-    var luck: Int = 0
+    var luck: Int = 0,
+
+    @OneToMany(mappedBy = "character", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val teamMemberships: MutableSet<TeamMember> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "character", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val hissatsuAssignments: MutableSet<CharacterHissatsus> = mutableSetOf()
 )
