@@ -27,10 +27,4 @@ data class TeamMember(
 
     @Column(name = "team_position", nullable = false)
     var teamPosition: Int = 1, // 1-16, determines display order in UI
-
-    @Column(name = "is_captain")
-    var isCaptain: Boolean = false,
-
-    @Column(name = "is_substitute")
-    var isSubstitute: Boolean = false
 )

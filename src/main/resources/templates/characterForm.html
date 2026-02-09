@@ -12,12 +12,12 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 th:if="${character.characterId == null}">Add new character</h2>
         <h2 th:unless="${character.characterId == null}">Edit character</h2>
-        <a href="/characters" class="btn btn-outline-secondary">Go back to the list</a>
+        <a href="/inazuma-characters" class="btn btn-outline-secondary">Go back to the list</a>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="#" th:action="@{/characters}" th:object="${character}" method="post">
+            <form action="#" th:action="@{/inazuma-characters}" th:object="${character}" method="post">
                 <input type="hidden" th:field="*{characterId}" />
 
                 <div class="mb-3">
@@ -103,7 +103,7 @@
                 <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
                     <button type="submit" class="btn btn-primary" th:if="${character.characterId == null}">Save character</button>
                     <button type="submit" class="btn btn-primary" th:unless="${character.characterId == null}">Update character</button>
-                    <a href="/characters" class="btn btn-outline-secondary">Cancel</a>
+                    <a href="/inazuma-characters" class="btn btn-outline-secondary">Cancel</a>
                 </div>
             </form>
         </div>

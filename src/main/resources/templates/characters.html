@@ -13,7 +13,7 @@
         <a href="/" class="btn btn-outline-secondary">Inicio</a>
     </div>
 
-    <a href="/characters/new" class="btn btn-success mb-3">Agregar Nuevo Personaje</a>
+    <a href="/inazuma-characters/new" class="btn btn-success mb-3">Agregar Nuevo Personaje</a>
 
     <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -35,9 +35,9 @@
                 <td th:text="${char.element}"></td>
                 <td th:text="${char.position}"></td>
                 <td>
-                    <a th:href="@{/characters/{id}(id=${char.characterId})}" class="btn btn-sm btn-info">Ver</a>
-                    <a th:href="@{/characters/{id}/edit(id=${char.characterId})}" class="btn btn-sm btn-warning">Editar</a>
-                    <a th:href="@{/characters/{id}/delete(id=${char.characterId})}"
+                    <a th:href="@{/inazuma-characters/{id}(id=${char.characterId})}" class="btn btn-sm btn-info">Ver</a>
+                    <a th:href="@{/inazuma-characters/{id}/edit(id=${char.characterId})}" class="btn btn-sm btn-warning">Editar</a>
+                    <a th:href="@{/inazuma-characters/{id}/delete(id=${char.characterId})}"
                        class="btn btn-sm btn-danger"
                        onclick="return confirm('¿Eliminar este personaje?');">Eliminar</a>
                 </td>

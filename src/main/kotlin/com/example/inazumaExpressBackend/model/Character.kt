@@ -3,8 +3,11 @@ package com.example.inazumaExpressBackend.model
 import com.example.inazumaExpressBackend.model.enums.Element
 import com.example.inazumaExpressBackend.model.enums.Position
 import com.example.inazumaExpressBackend.model.enums.Sex
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity
 @Table(name = "characters")
 data class Character(
@@ -49,9 +52,11 @@ data class Character(
     @Column
     var luck: Int = 0,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "character", cascade = [CascadeType.ALL], orphanRemoval = true)
     val teamMemberships: MutableSet<TeamMember> = mutableSetOf(),
 
+    @JsonIgnore
     @OneToMany(mappedBy = "character", cascade = [CascadeType.ALL], orphanRemoval = true)
     val hissatsuAssignments: MutableSet<CharacterHissatsus> = mutableSetOf()
 )

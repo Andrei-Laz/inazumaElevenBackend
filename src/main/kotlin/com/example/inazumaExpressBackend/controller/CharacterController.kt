@@ -8,7 +8,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 
 @Controller
-@RequestMapping("/characters")
+@RequestMapping("/inazuma-characters")
 class CharacterController {
 
     @Autowired
@@ -30,7 +30,7 @@ class CharacterController {
     fun createCharacter(@ModelAttribute character: Character, model: Model): String {
         try {
             characterService.saveCharacter(character)
-            return "redirect:/characters"
+            return "redirect:/inazuma-characters"
         } catch (e: Exception) {
             model.addAttribute("error", e.message)
             return "characterError"
@@ -44,7 +44,7 @@ class CharacterController {
             model.addAttribute("character", character)
             return "characterForm"
         }
-        return "redirect:/characters"
+        return "redirect:/inazuma-characters"
     }
 
     @PostMapping("/{id}")
@@ -55,7 +55,7 @@ class CharacterController {
                 model.addAttribute("error", "No se pudo actualizar el personaje.")
                 return "characterError"
             }
-            return "redirect:/characters"
+            return "redirect:/inazuma-characters"
         } catch (e: Exception) {
             model.addAttribute("error", e.message)
             return "characterError"
@@ -65,7 +65,7 @@ class CharacterController {
     @GetMapping("/{id}/delete")
     fun deleteCharacter(@PathVariable id: Int): String {
         characterService.deleteCharacter(id)
-        return "redirect:/characters"
+        return "redirect:/inazuma-characters"
     }
 
     @GetMapping("/{id}")
@@ -75,6 +75,6 @@ class CharacterController {
             model.addAttribute("character", character)
             return "characterDetails"
         }
-        return "redirect:/characters"
+        return "redirect:/inazuma-characters"
     }
 }
