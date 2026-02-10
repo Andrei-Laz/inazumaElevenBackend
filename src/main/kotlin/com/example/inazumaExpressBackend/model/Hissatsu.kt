@@ -1,6 +1,7 @@
 package com.example.inazumaExpressBackend.model
 
 import com.example.inazumaExpressBackend.model.enums.Element
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 
 @Entity
@@ -27,6 +28,7 @@ data class Hissatsu(
     @Column
     var power: Int = 0,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "hissatsu", cascade = [CascadeType.ALL], orphanRemoval = true)
     val characterAssignments: MutableSet<CharacterHissatsus> = mutableSetOf()
 )
