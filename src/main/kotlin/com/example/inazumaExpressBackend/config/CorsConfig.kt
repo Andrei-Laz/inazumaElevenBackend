@@ -27,7 +27,7 @@ class CorsConfig {
         config.allowedHeaders = listOf("*")
 
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/api/**", config) // Only enable CORS for API endpoints
+        source.registerCorsConfiguration("/api/**", config)
         return CorsFilter(source)
     }
 }

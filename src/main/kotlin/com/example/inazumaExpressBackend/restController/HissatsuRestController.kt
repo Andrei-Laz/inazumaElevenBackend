@@ -13,13 +13,11 @@ class HissatsuRestController {
     @Autowired
     private lateinit var hissatsuService: HissatsuService
 
-    // GET /api/inazuma-hissatsus → Returns JSON array of all hissatsus
     @GetMapping
     fun getAllHissatsus(): ResponseEntity<List<Hissatsu>> {
         return ResponseEntity.ok(hissatsuService.getAllHissatsus())
     }
 
-    // GET /api/inazuma-hissatsus/{id} → Returns single hissatsu as JSON
     @GetMapping("/{id}")
     fun getHissatsuById(@PathVariable id: Int): ResponseEntity<Hissatsu> {
         return hissatsuService.getHissatsuById(id)
@@ -27,14 +25,12 @@ class HissatsuRestController {
             ?: ResponseEntity.notFound().build()
     }
 
-    // POST /api/inazuma-hissatsus → Creates hissatsu from JSON body
     @PostMapping
     fun createHissatsu(@RequestBody hissatsu: Hissatsu): ResponseEntity<Hissatsu> {
         val saved = hissatsuService.saveHissatsu(hissatsu)
-        return ResponseEntity.status(201).body(saved) // 201 Created
+        return ResponseEntity.status(201).body(saved)
     }
 
-    // PUT /api/inazuma-hissatsus/{id} → Updates hissatsu from JSON body
     @PutMapping("/{id}")
     fun updateHissatsu(
         @PathVariable id: Int,
@@ -48,12 +44,11 @@ class HissatsuRestController {
         }
     }
 
-    // DELETE /api/inazuma-hissatsus/{id} → Deletes hissatsu
     @DeleteMapping("/{id}")
     fun deleteHissatsu(@PathVariable id: Int): ResponseEntity<Void> {
         val deleted = hissatsuService.deleteHissatsu(id)
         return if (deleted) {
-            ResponseEntity.noContent().build() // 204 No Content
+            ResponseEntity.noContent().build()
         } else {
             ResponseEntity.notFound().build()
         }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CharacterHissatsusRepository : JpaRepository<CharacterHissatsus, CharacterHissatsuId> {
 
-    // ✅ FIXED: Use JPQL queries to avoid property path ambiguity
     @Query("SELECT ch FROM CharacterHissatsus ch WHERE ch.id.characterId = :characterId")
     fun findByCharacterId(characterId: Int): List<CharacterHissatsus>
 

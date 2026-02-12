@@ -8,6 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebConfig : WebMvcConfigurer {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry.addResourceHandler("/images/**")
-            .addResourceLocations("file:/app/images/") // Docker volume path
+            .addResourceLocations("file:/app/images/")
     }
 }

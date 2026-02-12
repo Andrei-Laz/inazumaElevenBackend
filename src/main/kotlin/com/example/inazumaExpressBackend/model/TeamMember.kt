@@ -1,11 +1,9 @@
-// model/TeamMember.kt
 package com.example.inazumaExpressBackend.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.io.Serializable
 
-// model/TeamMember.kt
 @Entity
 @Table(name = "team_members", uniqueConstraints = [
     UniqueConstraint(columnNames = ["team_id", "character_id"])
@@ -26,6 +24,5 @@ data class TeamMember(
     @JoinColumn(name = "character_id", nullable = false)
     var character: Character
 ) {
-    // Required no-arg constructor for JPA (keep fields non-null in business logic)
     constructor() : this(null, Team(), Character())
 }

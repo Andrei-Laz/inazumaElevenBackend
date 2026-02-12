@@ -45,7 +45,6 @@ class TeamService(
         if (!teamRepo.existsById(teamId))
             throw RuntimeException("Team not found")
 
-        // ✅ FIXED: Properly set character relationship using reference
         val team = teamRepo.findById(teamId).orElseThrow { RuntimeException("Team not found") }
         val character = characterRepo.findById(characterId)
             .orElseThrow { RuntimeException("Character not found") }
@@ -62,17 +61,14 @@ class TeamService(
 
     @Transactional
     fun removeCharacterFromTeam(teamId: Int, characterId: Int): Boolean {
-        // ✅ FIXED: Use corrected method name
         return memberRepo.deleteByTeamTeamIdAndCharacterCharacterId(teamId, characterId) > 0
     }
 
     fun getTeamMembers(teamId: Int): List<TeamMember> {
-        // ✅ FIXED: Use corrected method name
         return memberRepo.findByTeamTeamId(teamId)
     }
 
     fun getCharactersInTeam(characterId: Int): List<TeamMember> {
-        // ✅ FIXED: Use corrected method name
         return memberRepo.findByCharacterCharacterId(characterId)
     }
 }

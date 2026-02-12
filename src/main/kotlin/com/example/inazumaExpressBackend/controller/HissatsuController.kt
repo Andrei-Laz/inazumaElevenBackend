@@ -24,7 +24,7 @@ class HissatsuController {
     @GetMapping("/new")
     fun showCreateForm(model: Model): String {
         val newHissatsu = Hissatsu(
-            element = Element.FIRE // Valor por defecto para evitar errores
+            element = Element.FIRE
         )
         model.addAttribute("hissatsu", newHissatsu)
         return "hissatsuForm"

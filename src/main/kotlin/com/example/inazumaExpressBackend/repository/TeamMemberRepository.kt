@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface TeamMemberRepository : JpaRepository<TeamMember, Int> {
 
-    // ✅ CORRECTED: Use relationship traversal syntax
     @Query("SELECT tm FROM TeamMember tm WHERE tm.team.teamId = :teamId")
     fun findByTeamTeamId(teamId: Int): List<TeamMember>
 

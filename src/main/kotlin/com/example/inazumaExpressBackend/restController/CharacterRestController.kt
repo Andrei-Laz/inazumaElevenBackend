@@ -14,13 +14,11 @@ class CharacterRestController {
     @Autowired
     private lateinit var characterService: CharacterService
 
-    // GET /api/characters → Returns JSON array
     @GetMapping
     fun getAllCharacters(): ResponseEntity<List<Character>> {
         return ResponseEntity.ok(characterService.getAllCharacters())
     }
 
-    // GET /api/characters/{id} → Returns single character as JSON
     @GetMapping("/{id}")
     fun getCharacterById(@PathVariable id: Int): ResponseEntity<Character> {
         return characterService.getCharacterById(id)
@@ -28,14 +26,12 @@ class CharacterRestController {
             ?: ResponseEntity.notFound().build()
     }
 
-    // POST /api/characters → Creates character from JSON body
     @PostMapping
     fun createCharacter(@RequestBody character: Character): ResponseEntity<Character> {
         val saved = characterService.saveCharacter(character)
-        return ResponseEntity.status(201).body(saved) // 201 Created
+        return ResponseEntity.status(201).body(saved)
     }
 
-    // PUT /api/characters/{id} → Updates character from JSON body
     @PutMapping("/{id}")
     fun updateCharacter(
         @PathVariable id: Int,
@@ -49,12 +45,11 @@ class CharacterRestController {
         }
     }
 
-    // DELETE /api/characters/{id} → Deletes character
     @DeleteMapping("/{id}")
     fun deleteCharacter(@PathVariable id: Int): ResponseEntity<Void> {
         val deleted = characterService.deleteCharacter(id)
         return if (deleted) {
-            ResponseEntity.noContent().build() // 204 No Content
+            ResponseEntity.noContent().build()
         } else {
             ResponseEntity.notFound().build()
         }

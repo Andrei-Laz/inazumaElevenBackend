@@ -19,13 +19,11 @@ class CharacterHissatsusService(
 
     @Transactional
     fun assignHissatsuToCharacter(characterId: Int, hissatsuId: Int): CharacterHissatsus {
-        // Validate existence
         if (!characterRepo.existsById(characterId))
             throw RuntimeException("Character not found")
         if (!hissatsuRepo.existsById(hissatsuId))
             throw RuntimeException("Hissatsu not found")
 
-        // Prevent duplicates
         if (repository.existsByCharacterIdAndHissatsuId(characterId, hissatsuId))
             throw RuntimeException("Hissatsu already assigned to this character")
 

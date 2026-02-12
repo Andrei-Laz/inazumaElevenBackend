@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*
 class CharacterHissatsusRestController(
     private val service: CharacterHissatsusService
 ) {
-
-    // Assign hissatsu to character
     @PostMapping
     fun assignHissatsu(
         @RequestParam characterId: Int,
@@ -26,7 +24,6 @@ class CharacterHissatsusRestController(
         }
     }
 
-    // Remove hissatsu from character
     @DeleteMapping
     fun removeHissatsu(
         @RequestParam characterId: Int,
@@ -39,7 +36,6 @@ class CharacterHissatsusRestController(
         }
     }
 
-    // Get all hissatsus for a character
     @GetMapping("/character/{characterId}")
     fun getHissatsusForCharacter(@PathVariable characterId: Int): ResponseEntity<List<Hissatsu>> {
         return ResponseEntity.ok(service.getHissatsusForCharacter(characterId))

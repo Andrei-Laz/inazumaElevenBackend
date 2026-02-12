@@ -34,10 +34,6 @@ data class Character(
     @Column(nullable = false)
     var position: Position = Position.ND,
 
-    @Column(name = "image_url")
-    var imageUrl: String = "/images/default_character.png",
-
-    // Stats
     @Column
     var kick: Int = 0,
     @Column
