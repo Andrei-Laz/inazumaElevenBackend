@@ -23,7 +23,7 @@ data class Hissatsu(
     var description: String = "",
 
     @Column(name = "hissatsu_type")
-    var type: String = "", // "shoot", "block", "dribble", "catch", etc.
+    var type: String = "",
 
     @Column
     var power: Int = 0,

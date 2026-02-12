@@ -15,11 +15,13 @@ class CorsConfig {
         config.allowCredentials = true
 
         // Allow requests from Android emulator and browser
-        config.allowedOrigins = listOf(
-            "http://localhost:8080/",      // Browser admin UI
-            "http://10.0.2.2:8080/",       // Android emulator
-            "http://192.168.1.100:8080/"   // Physical device (replace with your actual IP)
-        )
+//        config.allowedOrigins = listOf(
+//            "http://localhost:8080/",      // Browser admin UI
+//            "http://10.0.2.2:8080/",       // Android emulator
+//            "http://192.168.1.100:8080/"   // Physical device (replace with your actual IP)
+//        )
+
+        config.allowedOrigins = listOf("*")
 
         config.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
         config.allowedHeaders = listOf("*")

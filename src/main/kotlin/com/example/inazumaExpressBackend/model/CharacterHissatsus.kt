@@ -1,37 +1,35 @@
 package com.example.inazumaExpressBackend.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.io.Serializable
 
 @Embeddable
 data class CharacterHissatsuId(
-    var userId: Int = 0,
-    var characterId: Int = 0
+    var characterId: Int = 0,
+    var hissatsuId: Int = 0
 ) : Serializable
 
 @Entity
 @Table(
-    name = "character_hissatsu",
+    name = "character_hissatsus",
     uniqueConstraints = [
-        // Optional: Prevent same hissatsu twice on same character
-        UniqueConstraint(columnNames = ["user_id", "character_id", "hissatsu_id"])
+        UniqueConstraint(columnNames = ["character_id", "hissatsu_id"])
     ]
 )
 data class CharacterHissatsus(
     @EmbeddedId
     var id: CharacterHissatsuId = CharacterHissatsuId(),
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
-    @JoinColumn(name = "user_id", nullable = false)
-    var user: User? = null,
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("characterId")
     @JoinColumn(name = "character_id", nullable = false)
     var character: Character? = null,
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("hissatsuId")
     @JoinColumn(name = "hissatsu_id", nullable = false)
     var hissatsu: Hissatsu? = null
 )
