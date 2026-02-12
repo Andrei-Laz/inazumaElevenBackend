@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import java.nio.file.Files
+import java.nio.file.Paths
 
 @Controller
 @RequestMapping("/inazuma-characters")
@@ -27,14 +30,52 @@ class CharacterController {
     }
 
     @PostMapping
-    fun createCharacter(@ModelAttribute character: Character, model: Model): String {
-        try {
-            characterService.saveCharacter(character)
-            return "redirect:/inazuma-characters"
-        } catch (e: Exception) {
-            model.addAttribute("error", e.message)
-            return "characterError"
+    fun createCharacter(
+        @ModelAttribute character: Character,
+        @RequestParam("image") file: MultipartFile?  // ← NEW: Handle file upload
+    ): String {
+        // Handle image upload
+        val filename = saveCharacterImage(file, character.characterId)
+        character.imageUrl = "/images/characters/$filename"
+
+        characterService.saveCharacter(character)
+        return "redirect:/inazuma-characters/${character.characterId}"
+    }
+
+    @PostMapping("/{id}")
+    fun updateCharacter(
+        @PathVariable id: Int,
+        @ModelAttribute character: Character,
+        @RequestParam("image") file: MultipartFile?  // ← NEW
+    ): String {
+        val existing = characterService.getCharacterById(id) ?: return "redirect:/inazuma-characters"
+
+        // Preserve existing image if no new file uploaded
+        val filename = if (file != null && !file.isEmpty) {
+            saveCharacterImage(file, id)
+        } else {
+            existing.imageUrl.substringAfterLast('/')
         }
+        character.imageUrl = "/images/characters/$filename"
+
+        characterService.updateCharacter(id, character)
+        return "redirect:/inazuma-characters/${id}"
+    }
+
+    // Helper method (add inside controller)
+    private fun saveCharacterImage(file: MultipartFile?, characterId: Int?): String {
+        if (file == null || file.isEmpty) return "default.png"
+
+        // Generate unique filename: character_{id}_{timestamp}.ext
+        val ext = file.originalFilename?.substringAfterLast('.') ?: "png"
+        val filename = "character_${characterId ?: System.currentTimeMillis()}_${System.currentTimeMillis()}.$ext"
+
+        // Save to static resources directory
+        val path = Paths.get("src/main/resources/static/images/characters", filename)
+        Files.createDirectories(path.parent)
+        file.transferTo(path.toFile())
+
+        return filename
     }
 
     @GetMapping("/{id}/edit")
@@ -47,20 +88,6 @@ class CharacterController {
         return "redirect:/inazuma-characters"
     }
 
-    @PostMapping("/{id}")
-    fun updateCharacter(@PathVariable id: Int, @ModelAttribute character: Character, model: Model): String {
-        try {
-            val updated = characterService.updateCharacter(id, character)
-            if (updated == null) {
-                model.addAttribute("error", "No se pudo actualizar el personaje.")
-                return "characterError"
-            }
-            return "redirect:/inazuma-characters"
-        } catch (e: Exception) {
-            model.addAttribute("error", e.message)
-            return "characterError"
-        }
-    }
 
     @GetMapping("/{id}/delete")
     fun deleteCharacter(@PathVariable id: Int): String {

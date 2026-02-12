@@ -3,19 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error</title>
+    <title>Error de Sistema - Inazuma Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --inazuma-blue: #004da6;
+            --error-red: #d63031;
+        }
+        body {
+            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        .error-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border-top: 5px solid var(--error-red);
+        }
+        .red-card-icon {
+            font-size: 5rem;
+            color: var(--error-red);
+            filter: drop-shadow(0 0 10px rgba(214, 48, 49, 0.4));
+        }
+        .error-code {
+            background: rgba(214, 48, 49, 0.1);
+            color: #ff7675;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            border: 1px dashed rgba(214, 48, 49, 0.3);
+        }
+        .btn-retry {
+            background-color: var(--inazuma-blue);
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-retry:hover {
+            background-color: #003a7d;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">¡Ha ocurrido un error!</h4>
-        <p th:text="${error}">Mensaje de error aquí.</p>
-    </div>
+<div class="container">
+    <div class="row justify-content-center text-center">
+        <div class="col-md-6">
+            <div class="error-card">
+                <div class="mb-4">
+                    <i class="bi bi-exclamation-octagon-fill red-card-icon"></i>
+                </div>
 
-    <div class="mt-3">
-        <a href="/hissatsus" class="btn btn-primary">Volver a la lista</a>
-        <a href="/" class="btn btn-outline-secondary">Ir al inicio</a>
+                <h1 class="fw-bold mb-2 text-uppercase">¡Fuera de Juego!</h1>
+                <p class="text-muted mb-4">Ha ocurrido una infracción técnica en el servidor.</p>
+
+                <div class="error-code mb-4 text-start">
+                    <div class="small text-uppercase fw-bold opacity-50 mb-1">Informe del Árbitro:</div>
+                    <span th:text="${error}">Error desconocido al procesar la jugada.</span>
+                </div>
+
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="javascript:history.back()" class="btn btn-outline-light px-4">
+                        <i class="bi bi-arrow-left me-2"></i>Regresar
+                    </a>
+                    <a href="/" class="btn btn-retry px-4">
+                        <i class="bi bi-house-door me-2"></i>Menú Principal
+                    </a>
+                </div>
+
+                <div class="mt-4 pt-3 border-top border-secondary">
+                    <small class="text-muted">Inazuma Eleven Manager Admin Portal v2.0</small>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

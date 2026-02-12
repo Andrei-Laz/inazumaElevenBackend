@@ -3,43 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Personajes</title>
+    <title>Lista de Personajes - Inazuma</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .badge-FIRE { background-color: #ff4d4d; }
+        .badge-WIND { background-color: #2ecc71; }
+        .badge-EARTH { background-color: #e67e22; }
+        .badge-WOOD { background-color: #9b59b6; }
+        .badge-VOID { background-color: #7f8c8d; }
+        .table-container { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    </style>
 </head>
-<body>
+<body class="bg-light">
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Lista de Personajes</h2>
-        <a href="/" class="btn btn-outline-secondary">Inicio</a>
+        <h2 class="fw-bold text-primary">⚽ Plantilla de Jugadores</h2>
+        <div>
+            <a href="/" class="btn btn-outline-secondary me-2">Inicio</a>
+            <a href="/inazuma-characters/new" class="btn btn-success fw-bold">+ Nuevo Jugador</a>
+        </div>
     </div>
 
-    <a href="/inazuma-characters/new" class="btn btn-success mb-3">Agregar Nuevo Personaje</a>
-
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
+    <div class="table-container">
+        <table class="table table-hover align-middle mb-0">
             <thead class="table-dark">
             <tr>
-                <th>ID</th>
-                <th>Nickname</th>
-                <th>Nombre</th>
+                <th class="ps-4">ID</th>
+                <th>Apodo</th>
+                <th>Nombre Real</th>
                 <th>Elemento</th>
                 <th>Posición</th>
-                <th>Acciones</th>
+                <th class="text-center">Acciones</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="char : ${characters}">
-                <td th:text="${char.characterId}"></td>
-                <td th:text="${char.nickname}"></td>
+                <td class="ps-4 fw-bold text-muted" th:text="${char.characterId}"></td>
+                <td><span class="fw-bold text-dark" th:text="${char.nickname}"></span></td>
                 <td th:text="${char.name}"></td>
-                <td th:text="${char.element}"></td>
-                <td th:text="${char.position}"></td>
                 <td>
-                    <a th:href="@{/inazuma-characters/{id}(id=${char.characterId})}" class="btn btn-sm btn-info">Ver</a>
-                    <a th:href="@{/inazuma-characters/{id}/edit(id=${char.characterId})}" class="btn btn-sm btn-warning">Editar</a>
-                    <a th:href="@{/inazuma-characters/{id}/delete(id=${char.characterId})}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('¿Eliminar este personaje?');">Eliminar</a>
+                    <span th:class="'badge rounded-pill badge-' + ${char.element}" th:text="${char.element}"></span>
+                </td>
+                <td><span class="badge bg-outline-dark border text-dark" th:text="${char.position}"></span></td>
+                <td class="text-center">
+                    <div class="btn-group shadow-sm">
+                        <a th:href="@{/inazuma-characters/{id}(id=${char.characterId})}" class="btn btn-sm btn-info text-white">Ver</a>
+                        <a th:href="@{/inazuma-characters/{id}/edit(id=${char.characterId})}" class="btn btn-sm btn-warning">Editar</a>
+                        <a th:href="@{/inazuma-characters/{id}/delete(id=${char.characterId})}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('¿Retirar a este jugador del equipo?');">Eliminar</a>
+                    </div>
                 </td>
             </tr>
             </tbody>

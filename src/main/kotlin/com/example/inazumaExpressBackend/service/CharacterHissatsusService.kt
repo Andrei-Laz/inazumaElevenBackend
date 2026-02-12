@@ -2,9 +2,11 @@ package com.example.inazumaExpressBackend.service
 
 import com.example.inazumaExpressBackend.model.CharacterHissatsuId
 import com.example.inazumaExpressBackend.model.CharacterHissatsus
+import com.example.inazumaExpressBackend.model.Hissatsu
 import com.example.inazumaExpressBackend.repository.CharacterHissatsusRepository
 import com.example.inazumaExpressBackend.repository.CharacterRepository
 import com.example.inazumaExpressBackend.repository.HissatsuRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -27,8 +29,13 @@ class CharacterHissatsusService(
         if (repository.existsByCharacterIdAndHissatsuId(characterId, hissatsuId))
             throw RuntimeException("Hissatsu already assigned to this character")
 
+        val character = characterRepo.findByIdOrNull(characterId)
+        val hissatsu = hissatsuRepo.findByIdOrNull(hissatsuId)
+
         val assignment = CharacterHissatsus(
-            id = CharacterHissatsuId(characterId, hissatsuId)
+            id = CharacterHissatsuId(characterId, hissatsuId),
+            character = character,
+            hissatsu = hissatsu
         )
         return repository.save(assignment)
     }
@@ -38,11 +45,11 @@ class CharacterHissatsusService(
         return repository.deleteByCharacterIdAndHissatsuId(characterId, hissatsuId) > 0
     }
 
-    fun getHissatsusForCharacter(characterId: Int): List<CharacterHissatsus> {
-        return repository.findByCharacterId(characterId)
+    fun getHissatsusForCharacter(characterId: Int): List<Hissatsu> {
+        return repository.findHissatsusByCharacterId(characterId)
     }
 
-    fun getCharactersWithHissatsu(hissatsuId: Int): List<CharacterHissatsus> {
-        return repository.findByHissatsuId(hissatsuId)
+    fun getCharactersWithHissatsu(characterId: Int): List<Hissatsu> {
+        return repository.findHissatsusByCharacterId(characterId)
     }
 }

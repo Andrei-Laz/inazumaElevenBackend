@@ -3,194 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Hissatsus</title>
+    <title>Libro de Técnicas - Inazuma</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
-        .element-badge {
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .element-fire { background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; }
-        .element-wind { background: linear-gradient(135deg, #7ed6df, #0abde3); color: white; }
-        .element-earth { background: linear-gradient(135deg, #96ceB4, #54a0ff); color: white; }
-        .element-wood { background: linear-gradient(135deg, #55efc4, #00b894); color: white; }
-        .element-void { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; }
-        .type-icon { font-size: 1.2rem; }
-        .power-cell {
-            position: relative;
-            height: 25px;
-            background-color: #e9ecef;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .power-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00b894, #00cec9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
-        .table-container {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .action-btn {
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
+        :root { --inazuma-blue: #004da6; }
+        body { background-color: #f0f4f8; }
+        .table-container { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .element-FIRE { background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; }
+        .element-WIND { background: linear-gradient(135deg, #7ed6df, #0abde3); color: white; }
+        .element-EARTH { background: linear-gradient(135deg, #96ceB4, #e67e22); color: white; }
+        .element-WOOD { background: linear-gradient(135deg, #55efc4, #00b894); color: white; }
+        .element-VOID { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; }
+        .power-bar-bg { height: 12px; background: #eee; border-radius: 6px; overflow: hidden; width: 100px; }
+        .power-bar-fill { height: 100%; background: #fcc200; border-radius: 6px; }
     </style>
 </head>
 <body>
 <div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-gradient text-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">⚡ Lista de Hissatsus</h2>
-                <a href="/" class="btn btn-light">
-                    <i class="bi bi-house-door"></i> Inicio
-                </a>
-            </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary"><i class="bi bi-book-half me-2"></i>Libro de Técnicas</h2>
+        <div>
+            <a href="/" class="btn btn-outline-secondary me-2">Inicio</a>
+            <a href="/hissatsus/new" class="btn btn-success fw-bold">+ Nueva Técnica</a>
         </div>
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h5 class="mb-0">
-                        <i class="bi bi-list-ul"></i>
-                        <span th:text="'Total: ' + ${#lists.size(hissatsus)}">0</span> hissatsus
-                    </h5>
-                </div>
-                <a href="/hissatsus/new" class="btn btn-success btn-lg">
-                    <i class="bi bi-plus-circle"></i> Agregar Nuevo Hissatsu
-                </a>
-            </div>
+    </div>
 
-            <div class="table-responsive table-container">
-                <table class="table table-hover align-middle">
-                    <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Elemento</th>
-                        <th>Tipo</th>
-                        <th>Poder</th>
-                        <th>Descripción</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="his : ${hissatsus}" class="hover-row">
-                        <td class="fw-bold text-primary" th:text="${his.hissatsuId}">1</td>
-                        <td>
-                            <div class="fw-bold text-dark" th:text="${his.name}">Fire Tornado</div>
-                        </td>
-                        <td>
-                                <span class="element-badge"
-                                      th:classappend="${'element-' + #strings.toLowerCase(his.element)}">
-                                    <i class="bi bi-droplet-fill"></i>
-                                    <span th:text="${his.element}">FIRE</span>
-                                </span>
-                        </td>
-                        <td>
-                                <span class="badge bg-info text-dark" th:if="${his.type == 'SHOOT'}">
-                                    <i class="bi bi-lightning type-icon"></i> SHOOT
-                                </span>
-                            <span class="badge bg-warning text-dark" th:if="${his.type == 'DRIBBLE'}">
-                                    <i class="bi bi-person-running type-icon"></i> DRIBBLE
-                                </span>
-                            <span class="badge bg-primary" th:if="${his.type == 'BLOCK'}">
-                                    <i class="bi bi-shield-check type-icon"></i> BLOCK
-                                </span>
-                            <span class="badge bg-success" th:if="${his.type == 'CATCH'}">
-                                    <i class="bi bi-hand-index-thumb type-icon"></i> CATCH
-                                </span>
-                        </td>
-                        <td>
-                            <div class="power-cell">
-                                <div class="power-fill" th:style="${'width: ' + his.power + '%'}">
-                                    <span th:text="${his.power}">0</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <small class="text-muted" th:text="${#strings.abbreviate(his.description, 50)}">
-                                Sin descripción
-                            </small>
-                        </td>
-                        <td class="text-center">
-                            <a th:href="@{/hissatsus/{id}(id=${his.hissatsuId})}"
-                               class="btn btn-info action-btn me-1" title="Ver detalles">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                            <a th:href="@{/hissatsus/{id}/edit(id=${his.hissatsuId})}"
-                               class="btn btn-warning action-btn me-1" title="Editar">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <a th:href="@{/hissatsus/{id}/delete(id=${his.hissatsuId})}"
-                               class="btn btn-danger action-btn"
-                               title="Eliminar"
-                               onclick="return confirm('¿Estás seguro de eliminar este hissatsu? Esta acción no se puede deshacer.');">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(hissatsus)}">
-                        <td colspan="7" class="text-center py-5">
-                            <div class="text-muted">
-                                <i class="bi bi-inbox" style="font-size: 3rem;"></i>
-                                <p class="mt-3 mb-0">No hay hissatsus registrados</p>
-                                <a href="/hissatsus/new" class="btn btn-primary mt-2">
-                                    <i class="bi bi-plus-circle"></i> Agregar tu primer hissatsu
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="mt-4 p-3 bg-light rounded">
-                <h6 class="fw-bold mb-3">🔍 Leyenda de Tipos</h6>
-                <div class="d-flex flex-wrap gap-3">
-                    <div>
-                        <span class="badge bg-info text-dark me-2">
-                            <i class="bi bi-lightning"></i> SHOOT
+    <div class="table-container">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+            <tr>
+                <th class="ps-4">Nombre</th>
+                <th>Elemento</th>
+                <th>Tipo</th>
+                <th>Poder Base</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="his : ${hissatsus}">
+                <td class="ps-4">
+                    <div class="fw-bold" th:text="${his.name}"></div>
+                    <small class="text-muted" th:text="${#strings.abbreviate(his.description, 40)}"></small>
+                </td>
+                <td>
+                    <span th:class="'badge rounded-pill element-' + ${#strings.toUpperCase(his.element)}" th:text="${his.element}"></span>
+                </td>
+                <td>
+                        <span class="badge bg-light text-dark border">
+                            <i class="bi bi-lightning-fill text-warning" th:if="${his.type == 'SHOOT'}"></i>
+                            <i class="bi bi-shield-fill text-primary" th:if="${his.type == 'BLOCK'}"></i>
+                            <i class="bi bi-wind text-info" th:if="${his.type == 'DRIBBLE'}"></i>
+                            <i class="bi bi-hand-index-fill text-success" th:if="${his.type == 'CATCH'}"></i>
+                            <span th:text="${his.type}"></span>
                         </span>
-                        <small class="text-muted">Tiros especiales</small>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="power-bar-bg me-2">
+                            <div class="power-bar-fill" th:style="'width: ' + ${his.power} + '%'"></div>
+                        </div>
+                        <small class="fw-bold" th:text="${his.power}"></small>
                     </div>
-                    <div>
-                        <span class="badge bg-warning text-dark me-2">
-                            <i class="bi bi-person-running"></i> DRIBBLE
-                        </span>
-                        <small class="text-muted">Dribles especiales</small>
+                </td>
+                <td class="text-center">
+                    <div class="btn-group shadow-sm">
+                        <a th:href="@{/hissatsus/{id}(id=${his.hissatsuId})}" class="btn btn-sm btn-info text-white"><i class="bi bi-search"></i></a>
+                        <a th:href="@{/hissatsus/{id}/edit(id=${his.hissatsuId})}" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                        <a th:href="@{/hissatsus/{id}/delete(id=${his.hissatsuId})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta técnica del registro?');"><i class="bi bi-trash"></i></a>
                     </div>
-                    <div>
-                        <span class="badge bg-primary me-2">
-                            <i class="bi bi-shield-check"></i> BLOCK
-                        </span>
-                        <small class="text-muted">Bloqueos especiales</small>
-                    </div>
-                    <div>
-                        <span class="badge bg-success me-2">
-                            <i class="bi bi-hand-index-thumb"></i> CATCH
-                        </span>
-                        <small class="text-muted">Paradas especiales</small>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

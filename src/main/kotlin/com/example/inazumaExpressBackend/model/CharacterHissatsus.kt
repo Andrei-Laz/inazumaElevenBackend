@@ -32,4 +32,6 @@ data class CharacterHissatsus(
     @MapsId("hissatsuId")
     @JoinColumn(name = "hissatsu_id", nullable = false)
     var hissatsu: Hissatsu? = null
-)
+) {
+    constructor() : this(CharacterHissatsuId(), Character(), Hissatsu())
+}

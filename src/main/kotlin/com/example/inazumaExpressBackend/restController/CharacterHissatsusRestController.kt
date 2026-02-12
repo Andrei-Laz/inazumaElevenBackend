@@ -1,6 +1,7 @@
 package com.example.inazumaExpressBackend.restController
 
 import com.example.inazumaExpressBackend.model.CharacterHissatsus
+import com.example.inazumaExpressBackend.model.Hissatsu
 import com.example.inazumaExpressBackend.service.CharacterHissatsusService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -40,13 +41,7 @@ class CharacterHissatsusRestController(
 
     // Get all hissatsus for a character
     @GetMapping("/character/{characterId}")
-    fun getHissatsusForCharacter(@PathVariable characterId: Int): ResponseEntity<List<CharacterHissatsus>> {
+    fun getHissatsusForCharacter(@PathVariable characterId: Int): ResponseEntity<List<Hissatsu>> {
         return ResponseEntity.ok(service.getHissatsusForCharacter(characterId))
-    }
-
-    // Get all characters that have a specific hissatsu
-    @GetMapping("/hissatsu/{hissatsuId}")
-    fun getCharactersWithHissatsu(@PathVariable hissatsuId: Int): ResponseEntity<List<CharacterHissatsus>> {
-        return ResponseEntity.ok(service.getCharactersWithHissatsu(hissatsuId))
     }
 }

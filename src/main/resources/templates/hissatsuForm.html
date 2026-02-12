@@ -2,155 +2,73 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:if="${hissatsu.hissatsuId == null}">Agregar Hissatsu</title>
-    <title th:unless="${hissatsu.hissatsuId == null}">Editar Hissatsu</title>
+    <title th:text="${hissatsu.hissatsuId == null} ? 'Nueva Técnica' : 'Editar Técnica'"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
-        .form-section {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .stat-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-        .power-meter {
-            height: 8px;
-            background-color: #e9ecef;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 5px;
-        }
-        .power-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #28a745 0%, #ffc107 50%, #dc3545 100%);
-            transition: width 0.3s ease;
-        }
+        .form-card { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .input-group-text { background-color: #f8f9fa; border-right: none; }
+        .form-control { border-left: none; }
+        .power-display { font-size: 2rem; font-weight: 800; color: #004da6; }
     </style>
 </head>
-<body>
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>
-            <i class="bi bi-lightning-charge-fill me-2" style="color: #ffc107;"></i>
-            <span th:if="${hissatsu.hissatsuId == null}">Agregar Nuevo Hissatsu</span>
-            <span th:unless="${hissatsu.hissatsuId == null}">Editar Hissatsu</span>
-        </h2>
-        <a href="/hissatsus" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left me-1"></i>Volver a la lista
-        </a>
-    </div>
-
+<body class="bg-light">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form action="#" th:action="@{/hissatsus}" th:object="${hissatsu}" method="post">
+        <div class="col-md-7">
+            <div class="card form-card">
+                <div class="card-header bg-primary text-white p-4 text-center">
+                    <h3 class="mb-0 fw-bold" th:text="${hissatsu.hissatsuId == null} ? '✨ Crear Supertécnica' : '✏️ Editar Supertécnica'"></h3>
+                </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/hissatsus}" th:object="${hissatsu}" method="post">
                         <input type="hidden" th:field="*{hissatsuId}" />
 
-                        <!-- Basic Information Section -->
-                        <div class="form-section mb-4">
-                            <h5 class="mb-3">
-                                <i class="bi bi-info-circle me-2" style="color: #0d6efd;"></i>
-                                Información Básica
-                            </h5>
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label fw-bold">
-                                    <i class="bi bi-tag me-1"></i>Nombre *
-                                </label>
-                                <input type="text" class="form-control form-control-lg" id="name" th:field="*{name}"
-                                       placeholder="Ej: Fire Tornado, The Earth" required />
-                                <div class="form-text">Nombre del hissatsu especial</div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-uppercase">Nombre del Hissatsu</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lightning-charge"></i></span>
+                                <input type="text" class="form-control form-control-lg" th:field="*{name}" required placeholder="Ej: Tornado de Fuego" />
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="element" class="form-label fw-bold">
-                                    <i class="bi bi-droplet me-1"></i>Elemento *
-                                </label>
-                                <select class="form-select form-select-lg" id="element" th:field="*{element}" required>
-                                    <option value="">Selecciona un elemento</option>
-                                    <option value="FIRE">Fuego</option>
-                                    <option value="Wood">Arbol</option>
-                                    <option value="EARTH">Tierra</option>
-                                    <option value="WIND">Viento</option>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <label class="form-label fw-bold small">Elemento</label>
+                                <select class="form-select" th:field="*{element}" required>
+                                    <option value="FIRE">🔥 Fuego</option>
+                                    <option value="WIND">🌪️ Aire</option>
+                                    <option value="EARTH">⛰️ Montaña</option>
+                                    <option value="WOOD">🌳 Bosque</option>
+                                    <option value="VOID">⚪ Nada</option>
                                 </select>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="type" class="form-label fw-bold">
-                                    <i class="bi bi-type me-1"></i>Tipo de Hissatsu *
-                                </label>
-                                <select class="form-select form-select-lg" id="type" th:field="*{type}" required>
-                                    <option value="">Selecciona el tipo</option>
-                                    <option value="SHOOT">⚽ Tiro (Shoot)</option>
-                                    <option value="BLOCK">🛡️ Bloqueo (Block)</option>
-                                    <option value="DRIBBLE">🏃 Drible (Dribble)</option>
-                                    <option value="CATCH">🧤 Parada (Catch)</option>
+                            <div class="col-6">
+                                <label class="form-label fw-bold small">Tipo de Acción</label>
+                                <select class="form-select" th:field="*{type}" required>
+                                    <option value="SHOOT">⚽ Tiro</option>
+                                    <option value="BLOCK">🛡️ Bloqueo</option>
+                                    <option value="DRIBBLE">🏃 Drible</option>
+                                    <option value="CATCH">🧤 Parada</option>
                                 </select>
-                                <div class="form-text">Clasificación del hissatsu según su función en el campo</div>
                             </div>
                         </div>
 
-                        <!-- Description Section -->
-                        <div class="form-section mb-4">
-                            <h5 class="mb-3">
-                                <i class="bi bi-card-text me-2" style="color: #198754;"></i>
-                                Descripción
-                            </h5>
-
-                            <div class="mb-3">
-                                <label for="description" class="form-label fw-bold">
-                                    <i class="bi bi-chat-square-text me-1"></i>Descripción
-                                </label>
-                                <textarea class="form-control" id="description" th:field="*{description}"
-                                          rows="4" placeholder="Describe el hissatsu..."></textarea>
-                                <div class="form-text">Detalles sobre cómo funciona este hissatsu</div>
-                            </div>
+                        <div class="mb-4 text-center p-3 bg-light rounded shadow-sm">
+                            <label class="form-label fw-bold d-block text-uppercase small">Potencia de Técnica</label>
+                            <span id="powerVal" class="power-display" th:text="*{power}">50</span>
+                            <input type="range" class="form-range" th:field="*{power}" min="0" max="100"
+                                   oninput="document.getElementById('powerVal').innerText = this.value">
                         </div>
 
-                        <!-- Stats Section -->
-                        <div class="form-section mb-4">
-                            <h5 class="mb-3">
-                                <i class="bi bi-bar-chart-line me-2" style="color: #dc3545;"></i>
-                                Estadísticas
-                            </h5>
-
-                            <div class="mb-3">
-                                <label for="power" class="form-label fw-bold d-flex justify-content-between align-items-center">
-                                    <span>
-                                        <i class="bi bi-lightning me-1"></i>Potencia *
-                                    </span>
-                                    <span id="powerValue" class="badge bg-primary fs-6">0</span>
-                                </label>
-                                <input type="range" class="form-range" id="power" th:field="*{power}"
-                                       min="0" max="100" step="1" value="50"
-                                       oninput="updatePowerDisplay(this.value)" />
-                                <div class="power-meter">
-                                    <div class="power-fill" id="powerFill" style="width: 50%;"></div>
-                                </div>
-                                <div class="form-text">
-                                    <small>Nivel de potencia del hissatsu (0-100)</small>
-                                </div>
-                            </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small">Descripción / Efecto</label>
+                            <textarea class="form-control" th:field="*{description}" rows="3" placeholder="Describe la animación o el efecto especial..."></textarea>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-lg btn-primary px-4">
-                                <i class="bi bi-save me-2"></i>
-                                <span th:if="${hissatsu.hissatsuId == null}">Guardar Hissatsu</span>
-                                <span th:unless="${hissatsu.hissatsuId == null}">Actualizar Hissatsu</span>
-                            </button>
-                            <a href="/hissatsus" class="btn btn-lg btn-outline-secondary px-4">
-                                <i class="bi bi-x-circle me-1"></i>Cancelar
-                            </a>
+                        <div class="d-flex justify-content-between">
+                            <a href="/hissatsus" class="btn btn-outline-secondary px-4">Cancelar</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold">Guardar Técnica</button>
                         </div>
                     </form>
                 </div>
@@ -158,32 +76,5 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function updatePowerDisplay(value) {
-        document.getElementById('powerValue').textContent = value;
-        const percentage = (value / 100) * 100;
-        document.getElementById('powerFill').style.width = percentage + '%';
-
-        // Change badge color based on power level
-        const badge = document.getElementById('powerValue');
-        if (value >= 80) {
-            badge.className = 'badge bg-danger fs-6';
-        } else if (value >= 60) {
-            badge.className = 'badge bg-warning fs-6';
-        } else if (value >= 40) {
-            badge.className = 'badge bg-success fs-6';
-        } else {
-            badge.className = 'badge bg-secondary fs-6';
-        }
-    }
-
-    // Initialize power display
-    document.addEventListener('DOMContentLoaded', function() {
-        const powerInput = document.getElementById('power');
-        updatePowerDisplay(powerInput.value);
-    });
-</script>
 </body>
 </html>
